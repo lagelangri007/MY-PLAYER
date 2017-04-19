@@ -17,7 +17,7 @@ Player::~Player()
 
 bool Player::SetDataSource(const char* StreamName)
 {
-    if(strstr(StreamName,"mnt") != NULL)
+    if(strstr(StreamName,"mnt/") != NULL)
     {
         FILE* fp = NULL;
         fp = fopen(StreamName,"r");
