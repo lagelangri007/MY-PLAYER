@@ -1,4 +1,9 @@
 #include <inc/Player.h>
+#if defined(JB_41) || defined(JB_42) || defined(JB_43) || defined(AN_KK)
+#else //android 5.1
+#include <IMediaHTTPService.h>
+#endif
+
 #define DEBUG_ERR(X,...) printf("[%s][%d]"X,__func__,__LINE__,##__VA_ARGS__)
 #define PLAYER_INFO(X,...) printf("\n+++++++++++++++++++++"X,##__VA_ARGS__)
 
@@ -37,7 +42,12 @@ bool Player::SetDataSource(const char* StreamName)
     }
     else
     {
-        mPlayer.setDataSource(StreamName,NULL);
+#if defined(JB_41) || defined(JB_42) || defined(JB_43) || defined(AN_KK)
+    mPlayer.setDataSource(StreamName,NULL);
+#else
+    sp<IMediaHTTPService> httpService ;
+    mPlayer.setDataSource(httpService,StreamName,NULL);
+#endif
     }
     return true;
 }
